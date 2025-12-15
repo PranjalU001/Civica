@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIVICA - AI-Based Smart Life Assistant Platform</title>
+  <meta name="description" content="CIVICA helps people deal with fake information, government schemes awareness, digital literacy, and skill guidance through AI-powered assistance.">
+  <meta name="author" content="CIVICA">
+  
+  <meta property="og:title" content="CIVICA - AI Smart Life Assistant">
+  <meta property="og:description" content="Your AI-powered companion for navigating government schemes, detecting fraud, and building digital skills.">
+  <meta property="og:type" content="website">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ============================
+       CIVICA - CSS Stylesheet (Merged)
+       ============================ */
+
+    /* CSS Variables */
+    :root {
+      --background: hsl(30, 100%, 98%);
+      --foreground: hsl(0, 0%, 20%);
+      --card: hsl(0, 0%, 100%);
+      --primary: hsl(26, 100%, 50%); /* Sunset Orange Primary */
+      --primary-light: hsl(26, 100%, 60%);
+      --secondary: hsl(30, 100%, 93%);
+      --muted: hsl(30, 40%, 96%);
+      --muted-foreground: hsl(0, 0%, 45%);
+      --border: hsl(26, 50%, 85%);
+      --glass-bg: hsla(0, 0%, 100%, 0.7); /* Light transparent component */
+      --glass-border: hsla(26, 100%, 50%, 0.3);
+      --glass-shadow: 0 8px 32px 0 hsla(26, 100%, 50%, 0.1);
+      --gradient-start: hsl(0, 0%, 100%); /* White */
+      --gradient-end: hsl(30, 100%, 93%); /* Light Sunset Orange */
+      --radius: 1rem;
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      /* White and Sunset Orange Background */
+      background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+      color: var(--foreground);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Background Orbs */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+
+    .orb-1 {
+      top: -25%;
+      right: -25%;
+      width: 50%;
+      height: 50%;
+      background: hsla(26, 100%, 50%, 0.1);
+    }
+
+    .orb-2 {
+      top: 50%;
+      left: -25%;
+      width: 50%;
+      height: 50%;
+      background: var(--secondary);
+    }
+
+    .orb-3 {
+      bottom: 0;
+      right: 25%;
+      width: 33%;
+      height: 33%;
+      background: hsla(26, 100%, 50%, 0.05);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 2rem;
+      }
+    }
+
+    /* Glass Card (Light Transparent Component) */
+    .glass-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .glass-card {
+        padding: 2rem;
+      }
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.5;
+      background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4) 0%, hsla(0, 0%, 100%, 0.1) 100%);
+      pointer-events: none;
+    }
+
+    .hover-card {
+      transition: all 0.3s ease;
+    }
+
+    .hover-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px 0 hsla(26, 100%, 50%, 0.15);
+    }
+
+    /* Text Gradient */
+    .text-gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .header {
+        padding: 1rem 2rem;
+      }
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    @media (min-width: 768px) {
+      .logo {
+        font-size: 1.875rem;
+      }
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: hsla(0, 0%, 20%, 0.8);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn svg {
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    .glass-btn {
+      background: hsla(0, 0%, 100%, 0.5);
+      border: 1px solid var(--glass-border);
+      color: var(--foreground);
+    }
+
+    .glass-btn:hover {
+      background: hsla(0, 0%, 100%, 0.7);
+    }
+
+    .glass-btn-solid {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .glass-btn-solid:hover {
+      background: var(--primary-light);
+    }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      background: hsla(0, 0%, 100%, 0.5);
+      color: var(--foreground);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-icon:hover {
+      background: hsla(0, 0%, 100%, 0.7);
+    }
+
+    .btn-icon:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .full-width {
+      width: 100%;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    /* Main */
+    .main {
+      position: relative;
+      z-index: 10;
+      padding: 7rem 0 4rem;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero h1 {
+        font-size: 3.75rem;
+      }
+    }
+
+    .hero p {
+      max-width: 42rem;
+      margin: 0 auto;
+      font-size: 1.125rem;
+      color: var(--muted-foreground);
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    .icon-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      background: hsla(26, 100%, 50%, 0.1);
+      color: var(--primary);
+    }
+
+    .section-header h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    @media (min-width: 768px) {
+      .section-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .section-description {
+      color: hsla(0, 0%, 20%, 0.8);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .feature-card {
+      padding: 1rem;
+      border-radius: 0.75rem;
+      background: hsla(26, 100%, 50%, 0.05);
+      border: 1px solid hsla(26, 100%, 50%, 0.1);
+    }
+
+    .feature-card h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    /* Carousel */
+    .carousel-container {
+      overflow: hidden;
+      margin: 0 -0.5rem;
+    }
+
+    .carousel {
+      display: flex;
+      gap: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .carousel-item {
+      flex: 0 0 85%;
+      min-width: 0;
+    }
+
+    @media (min-width: 640px) {
+      .carousel-item {
+        flex: 0 0 45%;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .carousel-item {
+        flex: 0 0 32%;
+      }
+    }
+
+    .service-card {
+      display: block;
+      height: 100%;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      border: 1px solid hsla(26, 100%, 50%, 0.2);
+      background: hsla(0, 0%, 100%, 0.5);
+      backdrop-filter: blur(8px);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      border-color: hsla(26, 100%, 50%, 0.4);
+      background: hsla(0, 0%, 100%, 0.7);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px 0 hsla(26, 100%, 50%, 0.15);
+    }
+
+    .service-card.active {
+      border-color: hsla(26, 100%, 50%, 0.4);
+      box-shadow: var(--glass-shadow);
+      transform: scale(1.02);
+    }
+
+    .service-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover .service-icon {
+      transform: scale(1.1);
+    }
+
+    .service-icon.orange {
+      background: linear-gradient(135deg, hsl(30, 100%, 65%) 0%, hsl(26, 100%, 50%) 100%);
+    }
+
+    .service-icon.red {
+      background: linear-gradient(135deg, hsl(0, 84%, 65%) 0%, hsl(26, 100%, 55%) 100%);
+    }
+
+    .service-icon.amber {
+      background: linear-gradient(135deg, hsl(45, 100%, 65%) 0%, hsl(26, 100%, 55%) 100%);
+    }
+
+    .service-card h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card p {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+      line-height: 1.5;
+    }
+
+    .carousel-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      border: none;
+      background: hsla(26, 100%, 50%, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    .dot:hover {
+      background: hsla(26, 100%, 50%, 0.5);
+    }
+
+    .dot.active {
+      width: 1.5rem;
+      border-radius: 0.25rem;
+      background: var(--primary);
+    }
+
+    /* Two Column Grid */
+    .two-col-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .two-col-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 2.5rem;
+      background: var(--border);
+    }
+
+    /* Contact */
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .contact-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.5rem;
+      background: hsla(26, 100%, 50%, 0.1);
+      color: var(--primary);
+    }
+
+    .contact-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .contact-value {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    /* Footer */
+    .footer {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid hsla(26, 100%, 50%, 0.1);
+      padding: 2rem 0;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .footer-content {
+        flex-direction: row;
+      }
+    }
+
+    .footer p {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    .animate-slide-up {
+      opacity: 0;
+      animation: slideUp 0.6s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <header class="header">
+    <div class="container">
+      <nav class="nav glass-card">
+        <a href="#" class="logo">CIVICA</a>
+        
+        <div class="nav-links">
+          <a href="#overview">Overview</a>
+          <a href="#services">Services</a>
+          <a href="#about-us">About</a>
+          <a href="#contact-us">Contact</a>
+        </div>
+        
+        <button class="btn-icon glass-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="5"/>
+            <path d="M20 21a8 8 0 0 0-16 0"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      <section class="hero animate-fade-in">
+        <h1 class="text-gradient">Civica<br>Life Assistant</h1>
+        <p>Navigate government schemes, detect fraud, and build digital skills with CIVICA's intelligent platform.</p>
+      </section>
+
+      <section id="overview" class="section animate-slide-up" style="animation-delay: 0.1s">
+        <div class="glass-card">
+          <div class="section-header">
+            <div class="icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+              </svg>
+            </div>
+            <h2 class="text-gradient">Overview</h2>
+          </div>
+          
+          <p class="section-description">
+            This project focuses on building an <span class="highlight">AI-Based Smart Life Assistant Platform</span> to help people deal with fake information, lack of awareness about government schemes, digital illiteracy, and skill guidance.
+          </p>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <h3>Combat Misinformation</h3>
+              <p>AI-powered fact-checking and verification</p>
+            </div>
+            <div class="feature-card">
+              <h3>Scheme Awareness</h3>
+              <p>Easy access to government benefits</p>
+            </div>
+            <div class="feature-card">
+              <h3>Digital Literacy</h3>
+              <p>Build essential tech skills</p>
+            </div>
+            <div class="feature-card">
+              <h3>Skill Guidance</h3>
+              <p>Personalized career development</p>
+            </div>
+          </div>
+
+          <button class="btn glass-btn">
+            Learn More
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <section id="services" class="section animate-slide-up" style="animation-delay: 0.2s">
+        <div class="glass-card">
+          <h2 class="text-gradient section-title">Services</h2>
+          
+          <div class="carousel-container">
+            <div class="carousel" id="carousel">
+              <div class="carousel-item">
+                <a href="/scheme/" class="service-card">
+                  <div class="service-icon orange">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"/>
+                      <path d="m21 21-4.3-4.3"/>
+                      <path d="M11 8v6"/>
+                      <path d="M8 11h6"/>
+                    </svg>
+                  </div>
+                  <h3>SchemeGuide</h3>
+                  <p>Discover and apply for government schemes tailored to your eligibility.</p>
+                </a>
+              </div>
+              
+              <div class="carousel-item">
+                <a href="/fraud/" class="service-card">
+                  <div class="service-icon red">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                      <path d="M12 8v4"/>
+                      <path d="M12 16h.01"/>
+                    </svg>
+                  </div>
+                  <h3>Fake/Fraud Detection</h3>
+                  <p>AI-powered verification to protect you from misinformation and scams.</p>
+                </a>
+              </div>
+              
+              <div class="carousel-item">
+                <a href="/mitra/" class="service-card">
+                  <div class="service-icon amber">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 8V4H8"/>
+                      <rect width="16" height="12" x="4" y="8" rx="2"/>
+                      <path d="M2 14h2"/>
+                      <path d="M20 14h2"/>
+                      <path d="M15 13v2"/>
+                      <path d="M9 13v2"/>
+                    </svg>
+                  </div>
+                  <h3>Mitra AI</h3>
+                  <p>Your personal AI assistant for guidance, learning, and skill development.</p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-nav">
+            <button class="btn-icon glass-btn" id="prevBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+            </button>
+            
+            <div class="carousel-dots" id="carouselDots">
+              <button class="dot active" data-index="0"></button>
+              <button class="dot" data-index="1"></button>
+              <button class="dot" data-index="2"></button>
+            </div>
+            
+            <button class="btn-icon glass-btn" id="nextBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="two-col-grid">
+        <section id="about-us" class="section animate-slide-up" style="animation-delay: 0.3s">
+          <div class="glass-card hover-card">
+            <div class="section-header">
+              <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <h2 class="text-gradient">About Us</h2>
+            </div>
+            
+            <p class="section-description">
+              We are a dedicated team committed to bridging the digital divide and empowering citizens with AI-powered tools. Our mission is to make technology accessible, trustworthy, and beneficial for everyone, ensuring no one is left behind in the digital age.
+            </p>
+
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-value">1M+</div>
+                <div class="stat-label">Users Helped</div>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat">
+                <div class="stat-value">500+</div>
+                <div class="stat-label">Schemes Listed</div>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat">
+                <div class="stat-value">99%</div>
+                <div class="stat-label">Accuracy</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact-us" class="section animate-slide-up" style="animation-delay: 0.4s">
+          <div class="glass-card hover-card">
+            <div class="section-header">
+              <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="16" x="2" y="4" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              </div>
+              <h2 class="text-gradient">Contact Us</h2>
+            </div>
+            
+            <p class="section-description">
+              Have questions or need assistance? We're here to help. Reach out to us and our team will get back to you as soon as possible.
+            </p>
+
+            <div class="contact-list">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="contact-label">Email</div>
+                  <div class="contact-value">hello@civica.ai</div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="contact-label">Phone</div>
+                  <div class="contact-value">+91 1800 123 4567</div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="contact-label">Location</div>
+                  <div class="contact-value">New Delhi, India</div>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn glass-btn-solid full-width">Get In Touch</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="logo">CIVICA</div>
+        <p>© 2024 CIVICA. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ============================
+    // CIVICA - JavaScript (Merged)
+    // ============================
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carousel functionality
+      const carousel = document.getElementById('carousel');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const dots = document.querySelectorAll('.dot');
+      const items = document.querySelectorAll('.carousel-item');
+      
+      let currentIndex = 0;
+      const totalItems = items.length;
+      
+      // Update carousel position
+      function updateCarousel() {
+        // Calculate the width of one item and the gap
+        const itemWidth = items.length > 0 ? items[0].offsetWidth : 0;
+        const gap = 16; // 1rem gap as defined in CSS
+        const offset = currentIndex * (itemWidth + gap);
+        
+        if (carousel) {
+            carousel.style.transform = `translateX(-${offset}px)`;
+        }
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentIndex);
+        });
+        
+        // Update active card styling
+        document.querySelectorAll('.service-card').forEach((card, index) => {
+          // Check if the card index matches the current index
+          const cardIndex = Array.from(card.closest('.carousel-item').parentNode.children).indexOf(card.closest('.carousel-item'));
+          card.classList.toggle('active', cardIndex === currentIndex);
+        });
+        
+        // Update button states (always enabled for loop mode)
+        if (prevBtn) prevBtn.disabled = false;
+        if (nextBtn) nextBtn.disabled = false;
+      }
+      
+      // Navigate to previous slide
+      function goToPrev() {
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        updateCarousel();
+      }
+      
+      // Navigate to next slide
+      function goToNext() {
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateCarousel();
+      }
+      
+      // Navigate to specific slide
+      function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+      }
+      
+      // Event listeners
+      if (prevBtn) prevBtn.addEventListener('click', goToPrev);
+      if (nextBtn) nextBtn.addEventListener('click', goToNext);
+      
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => goToSlide(index));
+      });
+      
+      // Touch/swipe support
+      let touchStartX = 0;
+      let touchEndX = 0;
+      
+      if (carousel) {
+          carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+          }, { passive: true });
+          
+          carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+          }, { passive: true });
+      }
+      
+      function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            goToNext();
+          } else {
+            goToPrev();
+          }
+        }
+      }
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          goToPrev();
+        } else if (e.key === 'ArrowRight') {
+          goToNext();
+        }
+      });
+      
+      // Handle window resize
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateCarousel, 100);
+      });
+      
+      // Initialize carousel only if it exists
+      if (carousel) {
+          updateCarousel();
+      }
+      
+      // Smooth scroll for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href !== '#') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              const headerOffset = 100;
+              const elementPosition = target.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+              
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

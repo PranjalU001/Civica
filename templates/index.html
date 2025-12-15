@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIVICA – Login & Register</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* CSS styles are unchanged */
+* { 
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #1c1c1c, #0c0c0c); 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.container {
+    background: #2b2b2b;
+    padding: 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+}
+
+h1 {
+    text-align: center;
+    color: #ff7a00;
+    margin-bottom: 30px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #444;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.1rem;
+    padding: 10px;
+    cursor: pointer;
+    transition: color 0.3s, border-bottom 0.3s;
+    flex-grow: 1; 
+    text-align: center;
+}
+
+.tab-btn:hover:not(.active) {
+    color: #fff;
+}
+
+.tab-btn.active {
+    color: #ff7a00;
+    border-bottom: 3px solid #ff7a00;
+    font-weight: 600;
+}
+
+.form {
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form.active { 
+    display: flex; 
+}
+
+input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #ff7a00;
+    background: #333;
+    color: white;
+    width: 100%;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ff9933; 
+}
+
+input::placeholder {
+    color: #999; 
+}
+
+button {
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.primary {
+    background: #ff7a00;
+    color: white;
+}
+
+.primary:hover {
+    background: #e66a00;
+}
+
+.secondary {
+    background: transparent;
+    border: 2px solid #ff7a00;
+    color: #ff7a00;
+}
+
+.secondary:hover {
+    background: #ff7a00;
+    color: white;
+}
+
+.error {
+    color: #ff4d4d;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 600;
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>CIVICA</h1>
+
+<div class="tabs">
+    <button class="tab-btn active" data-tab="login">Login</button>
+    <button class="tab-btn" data-tab="register">Register</button>
+</div>
+
+<div id="error" class="error"></div>
+
+<div id="login" class="form active">
+    <input id="login-email" type="email" placeholder="Email Address">
+    <input id="login-password" type="password" placeholder="Password">
+    <button id="login-btn" class="primary">Login</button>
+    <button id="google-login" class="secondary">Google Login</button>
+</div>
+
+<div id="register" class="form">
+    <input id="reg-name" type="text" placeholder="Full Name">
+    <input id="reg-email" type="email" placeholder="Email Address">
+    <input id="reg-pass" type="password" placeholder="Password">
+    <input id="reg-confirm" type="password" placeholder="Confirm Password">
+    <button id="register-btn" class="primary">Register</button>
+    <button id="google-register" class="secondary">Google Sign-Up</button>
+</div>
+
+</div>
+
+<script type="module">
+// --- FIREBASE IMPORTS ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"; 
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup
+} from "https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js"; 
+
+// --- FIREBASE CONFIGURATION ---
+const firebaseConfig = {
+    apiKey: "AIzaSyAayN3RQtzO5qnaboF-2HSYeiHB62QkKwA", 
+    authDomain: "civica-e85b3.firebaseapp.com", 
+    projectId: "civica-e85b3" 
+};
+
+// Initialize Firebase services
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+// --- DOM ELEMENT REFERENCES (omitted for brevity) ---
+const errorBox = document.getElementById("error");
+const loginEmailInput = document.getElementById("login-email");
+const loginPasswordInput = document.getElementById("login-password");
+const loginBtn = document.getElementById("login-btn");
+const regNameInput = document.getElementById("reg-name");
+const regEmailInput = document.getElementById("reg-email");
+const regPassInput = document.getElementById("reg-pass");
+const regConfirmInput = document.getElementById("reg-confirm");
+const registerBtn = document.getElementById("register-btn");
+const googleLoginBtn = document.getElementById("google-login");
+const googleRegisterBtn = document.getElementById("google-register");
+
+
+// --- HELPER FUNCTIONS ---
+
+const showError = msg => {
+    errorBox.textContent = msg;
+    errorBox.style.display = msg ? "block" : "none"; 
+};
+
+// V V V V V V V V V V V V V V V V V V V V V V V V
+// CRITICAL FIX: Changed from 'home.html' to the Flask route '/home/'
+// V V V V V V V V V V V V V V V V V V V V V V V V
+const redirectToHome = () => {
+    // This MUST match the route defined in your app.py: @app.route('/home/')
+    window.location.href = '/home/'; 
+};
+// ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+
+
+// --- TAB SWITCH LOGIC (omitted for brevity) ---
+document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".form").forEach(f => f.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+        showError("");
+    });
+});
+
+
+// --- LOGIN EVENT HANDLER (omitted for brevity) ---
+loginBtn.addEventListener("click", async () => {
+    const email = loginEmailInput.value.trim();
+    const password = loginPasswordInput.value.trim();
+    
+    if (!email || !password) {
+        return showError("Please enter both email and password.");
+    }
+    showError(""); 
+    
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        redirectToHome(); 
+    } catch (e) {
+        console.error(e);
+        showError(e.message.replace("Firebase: Error ", ""));
+    }
+});
+
+
+// --- REGISTER EVENT HANDLER (omitted for brevity) ---
+registerBtn.addEventListener("click", async () => {
+    const name = regNameInput.value.trim();
+    const email = regEmailInput.value.trim();
+    const password = regPassInput.value;
+    const confirmPassword = regConfirmInput.value;
+    
+    if (!name || !email || !password || !confirmPassword) {
+        return showError("All fields are required for registration.");
+    }
+    if (password !== confirmPassword) {
+        return showError("Passwords do not match.");
+    }
+    if (password.length < 6) {
+        return showError("Password should be at least 6 characters.");
+    }
+    showError(""); 
+
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        redirectToHome();
+    } catch (e) {
+        console.error(e);
+        showError(e.message.replace("Firebase: Error ", ""));
+    }
+});
+
+
+// --- GOOGLE AUTH HANDLER (omitted for brevity) ---
+const handleGoogleAuth = async (action) => {
+    showError(""); 
+    try {
+        await signInWithPopup(auth, provider);
+        redirectToHome();
+    } catch (e) {
+        console.error(e);
+        showError(e.message.replace("Firebase: Error ", ""));
+    }
+};
+
+googleLoginBtn.addEventListener("click", () => handleGoogleAuth("Login"));
+googleRegisterBtn.addEventListener("click", () => handleGoogleAuth("Sign-Up"));
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitra AI Chat - Glassmorphism UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* --- CIVICA Design System CSS Variables --- */
+        :root {
+            --color-primary: #ff7b00;
+            --color-primary-hover: #e06c00;
+            --color-secondary: #6c757d;
+            --color-text: #212529;
+            --color-text-light: #f8f9fa;
+            --color-bg-start: #e0f7fa;
+            --color-bg-end: #c5e1a5;
+            --color-bg-glass: rgba(255, 255, 255, 0.6);
+            --color-bg-glass-darker: rgba(255, 255, 255, 0.4);
+            --color-border-glass: rgba(255, 255, 255, 0.4);
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- Main Chat Container (UPDATED FOR WIDTH) --- */
+        .chat-container {
+            width: 95%;            /* Changed from 100% to 95% to fill screen */
+            max-width: 1200px;     /* Changed from 600px to 1200px for desktop width */
+            height: 85vh;
+            background: var(--color-bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid var(--color-border-glass);
+            box-shadow: var(--shadow-glass);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- Header --- */
+        .chat-header {
+            padding: 20px 30px; /* Added more side padding */
+            background: var(--color-bg-glass-darker);
+            border-bottom: 1px solid var(--color-border-glass);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-header h1 {
+            font-size: 1.2rem;
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* --- Messages Area --- */
+        .chat-messages {
+            flex: 1;
+            padding: 30px; /* Increased padding for spacious feel */
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        /* Message Bubbles (UPDATED FOR READABILITY) */
+        .message {
+            max-width: 65%; /* Reduced from 80% to keep text readable on wide screens */
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            line-height: 1.6;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--color-text);
+            border-bottom-left-radius: 2px;
+            border: 1px solid var(--color-border-glass);
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: var(--color-primary);
+            color: var(--color-text-light);
+            border-bottom-right-radius: 2px;
+            box-shadow: 0 4px 10px rgba(255, 123, 0, 0.2);
+        }
+
+        .message strong {
+            font-weight: 600;
+        }
+
+        /* --- Input Area --- */
+        .input-area {
+            padding: 20px 30px;
+            background: var(--color-bg-glass-darker);
+            border-top: 1px solid var(--color-border-glass);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--color-border-glass);
+            background: rgba(255, 255, 255, 0.5);
+            outline: none;
+            color: var(--color-text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-area input:focus {
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(255, 123, 0, 0.1);
+        }
+
+        .send-btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .send-btn:hover {
+            background: var(--color-primary-hover);
+            transform: scale(1.05);
+        }
+
+        .typing-indicator {
+            font-size: 0.8rem;
+            color: var(--color-secondary);
+            margin-bottom: 5px;
+            margin-left: 30px;
+            display: none;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="bot-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div>
+                <h1>Mitra AI</h1>
+                <div style="font-size: 0.8rem; color: var(--color-secondary);">Digital Literacy Assistant</div>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chat-box">
+            <div class="message bot">
+                Hello! I am Mitra, your digital literacy assistant. Ask me anything about spotting fake news or staying safe online.
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typing-indicator">Mitra is thinking...</div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            <button class="send-btn" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Track conversation history
+        let chatHistory = [];
+
+        const inputField = document.getElementById("user-input");
+        const chatBox = document.getElementById("chat-box");
+        const typingIndicator = document.getElementById("typing-indicator");
+
+        inputField.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const message = inputField.value.trim();
+            if (message === "") return;
+
+            addMessageToUI("user", message);
+            inputField.value = ""; 
+            
+            typingIndicator.style.display = "block";
+            scrollToBottom();
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message, history: chatHistory })
+                });
+
+                const data = await response.json();
+                typingIndicator.style.display = "none";
+
+                if (data.error) {
+                    addMessageToUI("bot", "Error: " + data.error);
+                } else {
+                    addMessageToUI("bot", data.response);
+                    chatHistory.push({ role: "user", text: message });
+                    chatHistory.push({ role: "model", text: data.response });
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                typingIndicator.style.display = "none";
+                addMessageToUI("bot", "Sorry, I couldn't connect to the server.");
+            }
+        }
+
+        function addMessageToUI(sender, text) {
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", sender);
+            
+            let formattedText = text
+                .replace(/\n/g, "<br>")
+                .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+            messageDiv.innerHTML = formattedText;
+            chatBox.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>

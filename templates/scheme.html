@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheme Guide AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* (All CSS remains exactly the same as your previous provided code) */
+        :root { --primary-orange: #F47B20; --primary-orange-hover: #d96a17; --text-dark: #333333; --text-light: #666666; --glass-bg: rgba(255, 255, 255, 0.65); --glass-border: 1px solid rgba(255, 255, 255, 0.4); --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { min-height: 100vh; background: linear-gradient(135deg, #fdfbfb 0%, #fceed5 100%); display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .main-container { background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 24px; border: var(--glass-border); box-shadow: var(--glass-shadow); padding: 40px; width: 100%; max-width: 720px; text-align: center; position: relative; }
+        .header { margin-bottom: 30px; position: relative; }
+        .profile-icon { position: absolute; top: 0; right: 0; color: var(--primary-orange); cursor: pointer; }
+        h1 { color: var(--primary-orange); font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+        .subtitle { color: var(--text-dark); font-size: 1rem; line-height: 1.5; max-width: 90%; margin: 0 auto; }
+        .tabs-container { display: flex; gap: 15px; margin-bottom: 25px; justify-content: center; }
+        .tab-btn { flex: 1; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 0.95rem; background: transparent; border: 2px solid var(--primary-orange); color: var(--primary-orange); }
+        .tab-btn.active { background: rgba(244, 123, 32, 0.2); border: 2px solid transparent; color: var(--primary-orange); }
+        .tab-btn:hover:not(.active) { background: rgba(244, 123, 32, 0.05); }
+        .input-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .input-section.active-section { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .upload-zone { border: 2px dashed var(--primary-orange); border-radius: 16px; padding: 40px 20px; background: rgba(255, 255, 255, 0.3); transition: all 0.3s ease; margin-bottom: 25px; }
+        .upload-zone.dragover { background: rgba(244, 123, 32, 0.1); border-style: solid; }
+        .upload-icon { color: var(--primary-orange); margin-bottom: 15px; }
+        .upload-text { color: var(--text-dark); margin-bottom: 20px; font-weight: 500; }
+        #file-name-display { margin-top: 15px; color: var(--text-light); font-size: 0.9rem; font-style: italic; }
+        .text-input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid rgba(244, 123, 32, 0.3); background: rgba(255, 255, 255, 0.6); font-size: 1rem; color: var(--text-dark); margin-bottom: 25px; transition: border-color 0.3s; resize: vertical; }
+        .text-input:focus { outline: none; border-color: var(--primary-orange); }
+        .btn { padding: 14px 28px; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; border: none; }
+        .btn-primary { background: var(--primary-orange); color: white; box-shadow: 0 4px 14px rgba(244, 123, 32, 0.4); }
+        .btn-primary:hover { background: var(--primary-orange-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(244, 123, 32, 0.5); }
+        .btn-large-action { width: 100%; padding: 18px; font-size: 1.1rem; margin-bottom: 30px; }
+        .btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none !important; }
+        .results-container { text-align: left; background: var(--glass-bg); border: var(--glass-border); border-radius: 16px; padding: 25px; display: none; }
+        .results-container.show-results { display: block; animation: fadeIn 0.5s ease-in-out; }
+        .results-title { color: var(--primary-orange); font-weight: 700; margin-bottom: 15px; }
+        .results-list { list-style: none; }
+        .results-list li { margin-bottom: 12px; color: var(--text-dark); display: flex; align-items: flex-start; }
+        .bullet-icon { color: var(--primary-orange); margin-right: 10px; margin-top: 4px; flex-shrink: 0; }
+        /* Small utility for error messages */
+        .error-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #ff4d4d; color: white; padding: 12px 24px; border-radius: 8px; z-index: 100; animation: fadeIn 0.3s; }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header">
+            <div class="profile-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <h1>Scheme Guide AI</h1>
+            <p class="subtitle">Simplifying Indian Government Schemes for Everyone. Upload a file, paste a URL, or enter text to get a clear explanation.</p>
+        </div>
+
+        <div class="tabs-container">
+            <button class="tab-btn active" data-target="upload-section" data-type="file">Upload File</button>
+            <button class="tab-btn" data-target="url-section" data-type="url">Paste URL</button>
+            <button class="tab-btn" data-target="text-section" data-type="text">Paste Text</button>
+        </div>
+
+        <div id="upload-section" class="input-section active-section">
+            <div class="upload-zone" id="drop-zone">
+                <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                </div>
+                <p class="upload-text">Drag & drop files here or</p>
+                <input type="file" id="file-input" hidden accept=".pdf,.doc,.docx,.txt">
+                <button class="btn btn-primary" id="browse-btn">Browse Files</button>
+                <p id="file-name-display"></p>
+            </div>
+        </div>
+
+        <div id="url-section" class="input-section">
+            <input type="url" class="text-input" placeholder="https://example.gov.in/scheme-details..." id="url-input">
+        </div>
+
+        <div id="text-section" class="input-section">
+            <textarea class="text-input" rows="6" placeholder="Paste the scheme text or guidelines here..." id="text-input"></textarea>
+        </div>
+
+        <button class="btn btn-primary btn-large-action" id="analyze-btn">Analyze Scheme</button>
+
+        <div class="results-container" id="results-section">
+            <h3 class="results-title">Analysis Results</h3>
+            <ul class="results-list">
+                <li>
+                    <svg class="bullet-icon" width="12" height="12" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>
+                    <span id="res-eligibility"><strong>Eligibility Criteria:</strong>&nbsp; ...</span>
+                </li>
+                <li>
+                    <svg class="bullet-icon" width="12" height="12" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>
+                     <span id="res-benefits"><strong>Key Benefits:</strong>&nbsp; ...</span>
+                </li>
+                <li>
+                    <svg class="bullet-icon" width="12" height="12" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>
+                     <span id="res-process"><strong>Application Process:</strong>&nbsp; ...</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elements ---
+            const tabs = document.querySelectorAll('.tab-btn');
+            const inputSections = document.querySelectorAll('.input-section');
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+            const browseBtn = document.getElementById('browse-btn');
+            const fileNameDisplay = document.getElementById('file-name-display');
+            const analyzeBtn = document.getElementById('analyze-btn');
+            const resultsSection = document.getElementById('results-section');
+            
+            // Result span elements
+            const resEligibility = document.getElementById('res-eligibility');
+            const resBenefits = document.getElementById('res-benefits');
+            const resProcess = document.getElementById('res-process');
+
+
+            // --- Tab Switching Logic ---
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    inputSections.forEach(section => section.classList.remove('active-section'));
+                    const targetId = tab.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active-section');
+                    
+                    // Reset inputs when switching
+                    if(targetId !== 'upload-section') {
+                         fileNameDisplay.textContent = '';
+                         fileInput.value = '';
+                    }
+                    resultsSection.classList.remove('show-results');
+                });
+            });
+
+            // --- File Upload UI Logic ---
+            browseBtn.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length > 0) fileNameDisplay.textContent = `Selected: ${fileInput.files[0].name}`;
+            });
+            ['dragenter', 'dragover'].forEach(evt => dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.add('dragover'); }));
+            ['dragleave', 'drop'].forEach(evt => dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.remove('dragover'); }));
+            dropZone.addEventListener('drop', (e) => {
+                 if (e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    fileNameDisplay.textContent = `Selected: ${fileInput.files[0].name}`;
+                }
+            });
+
+            // --- Helper: Show Error Toast ---
+            function showError(msg) {
+                const toast = document.createElement('div');
+                toast.className = 'error-toast';
+                toast.textContent = msg;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+
+
+            // --- Analyze Button Logic (Connecting to Flask) ---
+            analyzeBtn.addEventListener('click', async () => {
+                // 1. Identify active input type
+                const activeTab = document.querySelector('.tab-btn.active');
+                const inputType = activeTab.getAttribute('data-type');
+                const formData = new FormData();
+                formData.append('input_type', inputType);
+
+                let hasData = false;
+
+                // 2. Gather data based on type
+                if (inputType === 'file') {
+                    if (fileInput.files.length > 0) {
+                        formData.append('file_data', fileInput.files[0]);
+                        hasData = true;
+                    }
+                } else if (inputType === 'url') {
+                    const urlVal = document.getElementById('url-input').value.trim();
+                    if (urlVal) {
+                        formData.append('url_data', urlVal);
+                        hasData = true;
+                    }
+                } else if (inputType === 'text') {
+                    const textVal = document.getElementById('text-input').value.trim();
+                    if (textVal) {
+                        formData.append('text_data', textVal);
+                        hasData = true;
+                    }
+                }
+
+                if (!hasData) {
+                    showError("Please provide input data first.");
+                    return;
+                }
+
+                // 3. Update UI State to Loading
+                const originalText = analyzeBtn.innerText;
+                analyzeBtn.innerText = 'Analyzing...';
+                analyzeBtn.disabled = true;
+                resultsSection.classList.remove('show-results');
+
+                try {
+                    // 4. Send Data to Flask Backend
+                    const response = await fetch('/analyze', {
+                        method: 'POST',
+                        body: formData // fetch automatically sets correct headers for FormData
+                    });
+
+                    const resultData = await response.json();
+
+                    if (resultData.success) {
+                        // 5. Update Result DOM elements with data from Python
+                        // Using innerHTML to allow bold tags sent from backend if desired
+                        resEligibility.innerHTML = `<strong>Eligibility Criteria:</strong>&nbsp; ${resultData.data.eligibility}`;
+                        resBenefits.innerHTML = `<strong>Key Benefits:</strong>&nbsp; ${resultData.data.benefits}`;
+                        resProcess.innerHTML = `<strong>Application Process:</strong>&nbsp; ${resultData.data.process}`;
+
+                        // Show results
+                        resultsSection.classList.add('show-results');
+                        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        showError(resultData.error || "An error occurred analyzing the data.");
+                    }
+
+                } catch (error) {
+                    console.error("Error connecting to backend:", error);
+                    showError("Failed to connect to the server.");
+                } finally {
+                    // 6. Revert button state
+                    analyzeBtn.innerText = originalText;
+                    analyzeBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
