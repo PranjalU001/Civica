@@ -23,7 +23,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Clean, modern UI with dark theme
 * Google Login option (extendable)
 
-![Login Page](Screenshot 2025-12-17 101808.png)
+![Login Page](Screenshots/Screenshot 2025-12-17 101808.png)
 
 ---
 
@@ -33,7 +33,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Easy navigation to all services
 * User-friendly design with accessibility focus
 
-![Home Page](Screenshot 2025-12-17 101828.png)
+![Home Page](Screenshots/Screenshot 2025-12-17 101828.png)
 
 ---
 
@@ -45,7 +45,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Get **simple explanations** of government schemes
 * Eligibility-based understanding
 
-![Services Section](Screenshot 2025-12-17 101851.png)
+![Services Section](Screenshots/Screenshot 2025-12-17 101851.png)
 
 ---
 
@@ -55,7 +55,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Paste scheme document or URL
 * AI-powered scheme analysis
 
-![Scheme Guide AI](Screenshot 2025-12-17 101905.png)
+![Scheme Guide AI](Screenshots/Screenshot 2025-12-17 101905.png)
 
 ---
 
@@ -67,7 +67,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Detect misinformation and fraud
 * Shows result in a clear output panel
 
-![Digital Literacy Helper](Screenshot 2025-12-17 101920.png)
+![Digital Literacy Helper](Screenshots/Screenshot 2025-12-17 101920.png)
 
 ---
 
@@ -78,7 +78,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Guides users on staying safe online
 * Supports learning and awareness
 
-![Mitra AI Chat](Screenshot 2025-12-17 101954.png)
+![Mitra AI Chat](Screenshots/Screenshot 2025-12-17 101954.png)
 
 ---
 
@@ -119,5 +119,5 @@ CIVICA aims to **bridge the digital divide** by combining AI technology with sim
 
 ### 👨‍💻 Developed By
 
-**CIVICA Team**
+**PRANJAL UPADHYAY*
 AI & Data Science Project
