@@ -33,7 +33,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Easy navigation to all services
 * User-friendly design with accessibility focus
 
-![Home Page](Screenshots/Screenshot 2025-12-17 101828.png)
+![Home Page](Screenshots/Screenshot%2025-12-17%101828.png)
 
 ---
 
