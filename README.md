@@ -23,7 +23,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Clean, modern UI with dark theme
 * Google Login option (extendable)
 
-![Login Page](Screenshots/Screenshot 2025-12-17 101808.png)
+![Login Page](Screenshots/Screenshot%202025-12-17%20101808.png)
 
 ---
 
