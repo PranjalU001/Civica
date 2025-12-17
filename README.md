@@ -78,7 +78,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Guides users on staying safe online
 * Supports learning and awareness
 
-![Mitra AI Chat](Screenshots/Screenshot 2025-12-17 101954.png)
+![Mitra AI Chat](Screenshots/Screenshot%202025-12-17%20101954.png)
 
 ---
 
