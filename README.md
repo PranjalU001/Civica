@@ -119,5 +119,5 @@ CIVICA aims to **bridge the digital divide** by combining AI technology with sim
 
 ### 👨‍💻 Developed By
 
-**PRANJAL UPADHYAY*
+**PRANJAL UPADHYAY**<br>
 AI & Data Science Project
