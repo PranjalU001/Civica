@@ -33,7 +33,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Easy navigation to all services
 * User-friendly design with accessibility focus
 
-![Home Page](Screenshots/Screenshot%2025-12-17%101828.png)
+![Home Page](Screenshots/Screenshot%202025-12-17%20101828.png)
 
 ---
 
@@ -44,8 +44,8 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Upload files, paste URLs, or enter text
 * Get **simple explanations** of government schemes
 * Eligibility-based understanding
-
-![Services Section](Screenshots/Screenshot 2025-12-17 101851.png)
+  
+![Services Section](Screenshots/Screenshot%202025-12-17%20101851.png)
 
 ---
 
@@ -55,7 +55,7 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Paste scheme document or URL
 * AI-powered scheme analysis
 
-![Scheme Guide AI](Screenshots/Screenshot 2025-12-17 101905.png)
+![Scheme Guide AI](Screenshots/Screenshot%202025-12-17%20101905.png)
 
 ---
 
@@ -66,8 +66,8 @@ The platform focuses on **accessibility, trust, and awareness**, especially for 
 * Check text or uploaded files
 * Detect misinformation and fraud
 * Shows result in a clear output panel
-
-![Digital Literacy Helper](Screenshots/Screenshot 2025-12-17 101920.png)
+  
+![Digital Literacy Helper](Screenshots/Screenshot%202025-12-17%20101920.png)
 
 ---
 
