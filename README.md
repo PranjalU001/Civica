@@ -121,3 +121,8 @@ CIVICA aims to **bridge the digital divide** by combining AI technology with sim
 
 **PRANJAL UPADHYAY**<br>
 AI & Data Science Project
+
+---
+
+## 📄 License
+This project is licensed under the MIT License.
